@@ -1,7 +1,11 @@
-Import paho.mqtt.client as mqtt
+import paho.mqtt.subscribe as subscribe
 
-lukija =mqtt.Client("ratikka")
+viestit = subscribe.simple("/hfp/v1/journey/ongoing/tram/+/+/1008/#", hostname="mqtt.hsl.fi", msg_count=30, retained=True)
+#1004 = nelosratikka, 1008 = kasiratikka
 
-lukija.connect("mqtt.hsl.fi")
+for msg in viestit:
+    print("%s \n----\n %s" % (msg.topic, msg.payload))
+    #x=1
 
-lukija.subscribe("/hfp/v1/journey/ongoing/tram/#")
+
+import requests
